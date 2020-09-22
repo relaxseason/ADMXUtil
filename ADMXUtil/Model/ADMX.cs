@@ -7,15 +7,15 @@ using System.Xml.Linq;
 
 namespace ADMXUtil.Model
 {
-    class ADMX
+    public class ADMX
     {
         private XElement admxDoc;
         private ADML adml;
 
-        public ADMX(XElement admxDoc, XElement admlDoc)
+        public ADMX(XElement admxDoc, ADML adml)
         {
             this.admxDoc = admxDoc;
-            this.adml = new ADML(admlDoc);
+            this.adml = adml;
         }
 
         public List<Policy> Policies
@@ -33,12 +33,12 @@ namespace ADMXUtil.Model
         private List<Policy> LoadPolicies()
         {
             var result = new List<Policy>();
-            XNamespace ns = "http://schemas.microsoft.com/GroupPolicy/2006/07/PolicyDefinitions";
+            XNamespace ns = admxDoc.GetDefaultNamespace();
             var policyElem = from el in admxDoc.Elements().Elements(ns + "policy")
                              select el;
             foreach (var elem in policyElem)
             {
-                result.Add(new Policy(elem));
+                result.Add(new Policy(elem, adml));
             }
 
             return result;
