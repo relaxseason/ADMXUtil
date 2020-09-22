@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Xml;
 using Xunit;
+using Xunit.Sdk;
 
 namespace ADMXUtil.Tests
 {
@@ -13,14 +15,28 @@ namespace ADMXUtil.Tests
         }
 
         [Fact]
-        public void Load_InputIsFilePath_ReturnPoilcyArray()
+        public void Load_InputIsTempFilePath_throwException()
         {
-            var tmpFile = Path.GetTempFileName();
-            var result = _admxUtil.Load(tmpFile);
-            Assert.IsType<List<Policy>>(result);
-
+            var tmpAdmxFile = Path.GetTempFileName();
+            var tmpAdmlFile = Path.GetTempFileName();
+            var result = Assert.Throws<XmlException>(() =>
+            {
+                _admxUtil.Load(tmpAdmxFile,tmpAdmlFile);
+            });
+            File.Delete(tmpAdmlFile);
+            File.Delete(tmpAdmxFile);
         }
+
+        [Fact]
+        public void Load_InputIsXMLFilePath_ReturnPoilcyArray()
+        {
+            var admxFile = Path.Combine(".","ExampleData","ADMXExample.admx");
+            var admlFile = Path.Combine(".", "ExampleData", "ADMLExample.adml");
+            var result = _admxUtil.Load(admxFile, admlFile);
+            Assert.IsType<List<Policy>>(result);
+        }
+
     }
 
-    
+
 }

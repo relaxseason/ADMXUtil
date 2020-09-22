@@ -17,4 +17,13 @@
     <ProjectReference Include="..\ADMXUtil\ADMXUtil.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="ExampleData\ADMLExample.adml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ExampleData\ADMXExample.admx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
