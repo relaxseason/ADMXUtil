@@ -21,7 +21,7 @@ namespace ADMXUtil.Tests
             var tmpAdmlFile = Path.GetTempFileName();
             var result = Assert.Throws<XmlException>(() =>
             {
-                _admxUtil.Load(tmpAdmxFile,tmpAdmlFile);
+                _admxUtil.Policies(tmpAdmxFile,tmpAdmlFile);
             });
             File.Delete(tmpAdmlFile);
             File.Delete(tmpAdmxFile);
@@ -32,8 +32,9 @@ namespace ADMXUtil.Tests
         {
             var admxFile = Path.Combine(".","ExampleData","ADMXExample.admx");
             var admlFile = Path.Combine(".", "ExampleData", "ADMLExample.adml");
-            var result = _admxUtil.Load(admxFile, admlFile);
+            var result = _admxUtil.Policies(admxFile, admlFile);
             Assert.IsType<List<Policy>>(result);
+            Assert.Equal(17,result.Count);
         }
 
     }

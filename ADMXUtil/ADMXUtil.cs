@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ADMXUtil.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -9,11 +10,12 @@ namespace ADMXUtil
 {
     public class ADMXUtil
     {
-        public List<Policy> Load(string admxPath, string admlPath)
+        public List<Policy> Policies(string admxPath, string admlPath)
         {
-            var admx = LoadAdmx(admxPath);
-            var adml = LoadAdml(admlPath);
-            return new List<Policy>() { new Policy() };
+            var admxDoc = LoadAdmx(admxPath);
+            var admlDoc = LoadAdml(admlPath);
+            var admx = new ADMX(admxDoc, admlDoc);
+            return admx.Policies;
         }
 
         private  XElement LoadAdmx(string admxPath)
